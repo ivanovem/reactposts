@@ -17,6 +17,8 @@ const PostForm= ({create})=> {
         create(newPost)
         setPost({title:'', body:''});
        }
+    
+
 
     return (
         <form>
