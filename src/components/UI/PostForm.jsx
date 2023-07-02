@@ -11,7 +11,6 @@ const PostForm= ({create})=> {
     const addNewPost = (e)=>{
         e.preventDefault();
     
-        // setPosts([...posts, {...post, id:Date.now()}]);
         const newPost = {
             ...post, id: Date.now()
         }

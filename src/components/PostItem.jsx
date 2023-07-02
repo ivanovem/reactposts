@@ -10,7 +10,7 @@ function PostItem(props) {
                     <div>{props.post.body}</div>
                 </div>
                 <div className='post__btns'>
-                    <button>Удалить</button>
+                    <button onClick={()=>props.remove(props.post)}>Удалить</button>
                 </div>
             </div>
  
