@@ -1,74 +1,29 @@
+import { BrowserRouter, Link, Route, Routes, Switch, Navigate } from 'react-router-dom';
+import Posts from './components/pages/Posts';
 import './styles/App.css';
-import { useEffect, useState } from 'react';
-import PostList from './components/PostList';
+import About from './components/pages/About';
+import Error from './components/pages/Error';
+import Navbar from './components/UI/Navbar/Navbar';
+import AppRouter from './components/AppRouter';
 
-import PostForm from './components/UI/PostForm';
-import PostFilter from './components/PostFilter';
-import MyModal from './components/UI/MyModal/MyModal';
-import MyButton from './components/UI/button/MyButton';
-import { usePosts } from './components/hooks/usePosts';
-import PostService from './components/API/PostService';
-import Loader from './components/UI/Loader/Loader';
-import { useFetching } from './components/hooks/useFetching';
-import { getPagesArray, getPagesCount } from './utils/pages';
-import Pagination from './components/UI/pagination/Pagination';
 
 
 function App() {
-  const [posts, setPosts] = useState([  ])
-  const [filter, setFilter] = useState({sort:'', query:''})
-  const [modal, setModal] = useState(false);
-  const [totalPages, setTotalPages] = useState(0);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(1);
-  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
-
-  const [fetchPosts, isPostsLoading, postError]= useFetching(async (limit, page)=>{
-    const response = await PostService.getAll(limit, page);
-    setPosts(response.data);
-    const totalCount = response.headers['x-total-count'];
-    setTotalPages(getPagesCount(totalCount, limit));
-  })
-   console.log(totalPages)
-  useEffect(()=>  {
-    fetchPosts(limit, page)
-  }, [page])
-
-  const createPost= (newPost)=>{
-    setPosts([...posts, newPost]);
-    setModal(false);
-  }
-  
-  const removePost = (post)=>{
-    setPosts(posts.filter(p=> p.id!==post.id))
-  }
-
-  const changePage = (page) => {
-    setPage(page)
-    fetchPosts(limit, page)
-  }
 
   return (
-    <div className="App">
-      <MyButton style={{marginTop: "30px"}} onClick={()=>setModal(true)}>
-        Создать пользователя
-      </MyButton>
-      <MyModal visible={modal} setVisible={setModal}>
-        <PostForm create={createPost}/>
-      </MyModal>
-      <hr style={{margin: "15px 0px"}}/>
-      <PostFilter filter={filter} setFilter={setFilter}/>
-      {postError&&
-        <h1>Произошла ошибка ${postError}</h1>
-      }
-      {isPostsLoading
-        ? <div style={{display: 'flex', justifyContent:'center', marginTop: '50px'}}><Loader/></div>
-        : <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список постов 1"/>
-      }
-      <Pagination page={page} changePage={changePage} totalPages={totalPages}/>
-      
-     
-    </div>
+    <BrowserRouter>
+      <Navbar/>
+      {/* <Routes>
+        <Route path='/about' Component={About}/>  
+        <Route path='/posts' Component={Posts}/>  
+        <Route path='/error' Component={Error}/>  
+        <Route
+        path="*"
+        element={<Navigate to="/error" Component={Error} />}
+        />
+      </Routes> */}
+      <AppRouter/>
+    </BrowserRouter>
   );
 }
 
