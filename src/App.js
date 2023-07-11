@@ -13,15 +13,6 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar/>
-      {/* <Routes>
-        <Route path='/about' Component={About}/>  
-        <Route path='/posts' Component={Posts}/>  
-        <Route path='/error' Component={Error}/>  
-        <Route
-        path="*"
-        element={<Navigate to="/error" Component={Error} />}
-        />
-      </Routes> */}
       <AppRouter/>
     </BrowserRouter>
   );
