@@ -28,7 +28,6 @@ function Posts() {
     const totalCount = response.headers['x-total-count'];
     setTotalPages(getPagesCount(totalCount, limit));
   })
-   console.log(totalPages)
   useEffect(()=>  {
     fetchPosts(limit, page)
   }, [page])
