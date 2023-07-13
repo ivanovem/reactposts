@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Posts from './pages/Posts';
 import About from './pages/About';
@@ -6,9 +6,16 @@ import Error from './pages/Error';
 import PostIdPage from "./pages/PostIdPage";
 import { BrowserRouter, Link, Route, Routes, Switch, Navigate } from 'react-router-dom';
 import Login from "./pages/Login";
+import { AuthContext } from "./context";
+import Loader from "./UI/Loader/Loader";
 
 function AppRouter() {
-    const isAuth = false;
+    const {isAuth, setIsAuth, isLoading} = useContext(AuthContext);
+
+    if (isLoading) {
+        return <Loader/>
+    }
+
     return (
         isAuth
         ?
@@ -16,10 +23,9 @@ function AppRouter() {
             <Route path='/about' Component={About}/>  
             <Route exact path='/posts' Component={Posts}/>  
             <Route exact path='/posts/:id' Component={PostIdPage}/>  
-            <Route path='/error' Component={Error}/>  
             <Route
                 path="*"
-                element={<Navigate to="/error" Component={Error} />}
+                element={<Navigate to="/posts" Component={Posts} />}
             />
          </Routes>
         :
