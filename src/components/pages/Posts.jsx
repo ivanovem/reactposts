@@ -13,6 +13,7 @@ import { getPagesArray, getPagesCount } from '../../utils/pages';
 import Pagination from '../UI/pagination/Pagination';
 
 
+
 function Posts() {
   const [posts, setPosts] = useState([  ])
   const [filter, setFilter] = useState({sort:'', query:''})
@@ -48,7 +49,7 @@ function Posts() {
 
   return (
     <div className="App">
-      <MyButton style={{marginTop: "30px"}} onClick={()=>setModal(true)}>
+      <MyButton style={{marginTop: "30px"}} onClick={()=>{setModal(true);}}>
         Создать пользователя
       </MyButton>
       <MyModal visible={modal} setVisible={setModal}>
